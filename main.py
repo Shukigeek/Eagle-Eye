@@ -1,6 +1,8 @@
+from PyQt5.QtWidgets import QApplication
+
 from DAL.DAL_crud import AgentDB
 from model.agents import Agent
-
+from UI.Qt import MainWindow
 def menu():
     db = AgentDB()
     while True:
@@ -97,5 +99,16 @@ def menu():
             print("Invalid option, try again.")
 
 if __name__ == '__main__':
-    menu()
+    a = input("choose view (console/widget)")
+    if a == "console":
+        menu()
+    else:
+        import sys
+
+        app = QApplication(sys.argv)
+        with open("UI/style.qss", "r", encoding="utf-8") as f:
+            app.setStyleSheet(f.read())
+        win = MainWindow()
+        win.show()
+        sys.exit(app.exec_())
 

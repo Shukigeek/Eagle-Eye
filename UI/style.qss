@@ -1,0 +1,55 @@
+/* בסיס כללי */
+QWidget {
+    background-color: #121212;
+    color: #00ff88;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 14px;
+}
+
+/* טבלה */
+QTableWidget {
+    gridline-color: #00ff88;
+    selection-background-color: #005533;
+    selection-color: #ffffff;
+    border: 1px solid #00ff88;
+}
+
+QHeaderView::section {
+    background-color: #0d0d0d;
+    color: #00ff88;
+    padding: 6px;
+    border: 1px solid #00ff88;
+}
+
+/* כפתורים */
+QPushButton {
+    background-color: #003322;
+    color: #00ff88;
+    border: 1px solid #00ff88;
+    padding: 6px 14px;
+    border-radius: 8px;
+}
+
+QPushButton:hover {
+    background-color: #005533;
+}
+
+QPushButton:pressed {
+    background-color: #007755;
+    color: #ffffff;
+}
+
+/* שדות קלט */
+QLineEdit, QComboBox {
+    background-color: #1e1e1e;
+    color: #00ff88;
+    border: 1px solid #00ff88;
+    padding: 4px;
+    border-radius: 5px;
+}
+
+/* הודעות */
+QMessageBox {
+    background-color: #1a1a1a;
+    color: #00ff88;
+}
