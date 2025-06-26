@@ -17,7 +17,4 @@ def connect_db():
 
 
 
-if __name__ == "__main__":
-    connection = connect_db()
-    if connection:
-        connection.close()
+

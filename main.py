@@ -22,13 +22,21 @@ def menu():
             while status not in ["Active", "Injured", "Missing", "Retired"]:
                 print("enter from list only")
                 status = input("Status (Active/Injured/Missing/Retired): ")
-            missionsCompleted = int(input("Missions Completed: "))
+            missionsCompleted = input("Missions Completed: ")
+            while not missionsCompleted.isdigit() or int(missionsCompleted) < 0:
+                print("enter a valid number")
+                missionsCompleted = input("Missions Completed: ")
+            missionsCompleted = int(missionsCompleted)
             agent = Agent(codeName, realName, location, status, missionsCompleted)
             db.create(agent)
             print("Agent added with ID:", agent.id)
 
         elif choice == '2':
-            id = int(input("Enter Agent ID: "))
+            try:
+                id = int(input("Enter Agent ID: "))
+            except ValueError:
+                print("not a number")
+                continue
             agent = db.read_agent(id)
             if agent:
                 print(agent)
@@ -36,9 +44,14 @@ def menu():
                 print("Agent not found")
 
         elif choice == '3':
-            id = int(input("Enter Agent ID to update: "))
+            try:
+                id = int(input("Enter Agent ID to update: "))
+            except ValueError:
+                print("not a number")
+                continue
             agent = db.read_agent(id)
             if agent:
+                print("Enter new value for each field or press 'Enter' to keep current")
                 agent.codeName = input(f"Code Name [{agent.codeName}]: ") or agent.codeName
                 agent.realName = input(f"Real Name [{agent.realName}]: ") or agent.realName
                 agent.location = input(f"Location [{agent.location}]: ") or agent.location
@@ -47,7 +60,11 @@ def menu():
                     print("enter from list only")
                     agent.status = input(f"Status [{agent.status}]: ") or agent.status
                 missions = input(f"Missions Completed [{agent.missionsCompleted}]: ")
-                if missions and missions.isdigit():
+                while missions != "" and (not missions.isdigit() or int(missions) < 0):
+                    print("Enter a valid positive number or press Enter to skip.")
+                    missions = input(f"Missions Completed [{agent.missionsCompleted}]: ")
+
+                if missions != "":
                     agent.missionsCompleted = int(missions)
                 db.update_agent(agent)
                 print("Agent updated")
@@ -55,7 +72,11 @@ def menu():
                 print("Agent not found")
 
         elif choice == '4':
-            id = int(input("Enter Agent ID to delete: "))
+            try:
+                id = int(input("Enter Agent ID to delete: "))
+            except ValueError:
+                print("not a number")
+                continue
             db.delete_agent(id)
             print("Agent deleted if existed")
 

@@ -39,11 +39,10 @@ class AgentDB():
             ))
             self.conn.commit()
             if self.cursor.rowcount == 0:
-                print("Agent not found in DB.")
                 return False
             return True
         except Exception as e:
-            print("❌ Error updating agent:", e)
+            print("Error updating agent:", e)
             return False
 
     def delete_agent(self, agent_id):
@@ -60,13 +59,3 @@ class AgentDB():
         self.cursor.close()
         self.conn.close()
 
-if __name__ == '__main__':
-    a = Agent('r','chaim','now york','live',6,2)
-    s = AgentDB()
-    # s.create(a)
-    # s.delete_agent(3)
-    print(s.read_agent(2))
-    s.update_agent(a)
-
-    s.get_all_agents()
-    s.close()
