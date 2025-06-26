@@ -19,6 +19,9 @@ def menu():
             realName = input("Real Name: ")
             location = input("Location: ")
             status = input("Status (Active/Injured/Missing/Retired): ")
+            while status not in ["Active", "Injured", "Missing", "Retired"]:
+                print("enter from list only")
+                status = input("Status (Active/Injured/Missing/Retired): ")
             missionsCompleted = int(input("Missions Completed: "))
             agent = Agent(codeName, realName, location, status, missionsCompleted)
             db.create(agent)
@@ -40,8 +43,11 @@ def menu():
                 agent.realName = input(f"Real Name [{agent.realName}]: ") or agent.realName
                 agent.location = input(f"Location [{agent.location}]: ") or agent.location
                 agent.status = input(f"Status [{agent.status}]: ") or agent.status
+                while agent.status not in ["Active", "Injured", "Missing", "Retired" ]:
+                    print("enter from list only")
+                    agent.status = input(f"Status [{agent.status}]: ") or agent.status
                 missions = input(f"Missions Completed [{agent.missionsCompleted}]: ")
-                if missions:
+                if missions and missions.isdigit():
                     agent.missionsCompleted = int(missions)
                 db.update_agent(agent)
                 print("Agent updated")
@@ -55,12 +61,13 @@ def menu():
 
         elif choice == '5':
             agents = db.get_all_agents()
-            print("id   code name    real name    location   status       3"
-                  "mission complete")
-            for agent in agents:
-                print(agent)
-                print("-" * 20)
+            print(f"{'ID':<4} {'Code Name':<12} {'Real Name':<15} {'Location':<12} {'Status':<10} {'Missions':<8}")
+            print("-" * 65)
 
+            for agent in agents:
+                print(
+                    f"{agent.id:<4} {agent.codeName:<12} {agent.realName:<15} "
+                    f"{agent.location:<12} {agent.status:<10} {agent.missionsCompleted:<8}")
         elif choice == '0':
             db.close()
             break

@@ -23,7 +23,7 @@ class AgentDB():
 
     def update_agent(self, agent: Agent):
         if agent.id is None:
-            print("⚠️ Cannot update agent without ID.")
+            print("Cannot update agent without ID.")
             return False
         try:
             sql = """UPDATE agents
@@ -39,10 +39,8 @@ class AgentDB():
             ))
             self.conn.commit()
             if self.cursor.rowcount == 0:
-                print("⚠️ Agent not found in DB.")
+                print("Agent not found in DB.")
                 return False
-
-            print("✅ Agent updated successfully.")
             return True
         except Exception as e:
             print("❌ Error updating agent:", e)
@@ -56,7 +54,8 @@ class AgentDB():
         sql = "SELECT * FROM agents"
         self.cursor.execute(sql)
         rows = self.cursor.fetchall()
-        return [Agent(*row) for row in rows]
+        return [Agent(codeName=row[1],realName=row[2],
+                      location=row[3],status=row[4],missionsCompleted=row[5],id=row[0]) for row in rows]
     def close(self):
         self.cursor.close()
         self.conn.close()
